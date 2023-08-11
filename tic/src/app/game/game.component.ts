@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SocketServiceService } from '../service/socket-service.service';
 
 @Component({
   selector: 'app-game',
@@ -12,9 +13,27 @@ export class GameComponent implements OnInit {
   counter = 0;
   isdraw = '';
   freshpage = true;
-  constructor() { }
+  constructor(private socketService : SocketServiceService) { }
 
   ngOnInit(): void {
+    const socket = this.socketService.getSocket();
+
+    socket.on('playerMove', (data: { value: 'X' | 'O', index: number }) => {
+      // Gelen hamleyi yerel olarak güncelleme
+      if (!this.squares[data.index]) {
+        this.squares.splice(data.index, 1, data.value);
+        this.xIsNext = !this.xIsNext;
+        this.counter++;
+
+        // Kazananı kontrol ediyoruz
+        this.winner = this.calculateWinner();
+
+        // Berabere durumunu kontrol ediyoruz
+        if (!this.winner && this.counter === 9) {
+          this.isdraw = 'yes';
+        }
+      }
+    });
   }
 
   newGame(){
@@ -29,18 +48,27 @@ export class GameComponent implements OnInit {
     return this.xIsNext?'X':'O'
   }
 
-  makeMove(idx:number){
-    if(!this.squares[idx]){
-      this.squares.splice(idx,1,this.player)
+  makeMove(index: number) {
+    if (!this.squares[index]) {
+      const socket = this.socketService.getSocket();
+
+      // Oyuncunun hamlesini sunucuya gönderiyoruz
+      socket.emit('playerMove', { value: this.player, index: index });
+
+      // Oyuncunun hamlesini yerel olarak güncelliyoruz
+      this.squares.splice(index, 1, this.player);
       this.xIsNext = !this.xIsNext;
       this.counter++;
-  }
-  this.winner = this.calculateWinner();
+    }
 
-  if(!this.winner && this.counter == 9){
-    this.isdraw = 'yes'
+    // Kazananı kontrol ediyoruz
+    this.winner = this.calculateWinner();
+
+    // Berabere durumunu kontrol ediyoruz
+    if (!this.winner && this.counter === 9) {
+      this.isdraw = 'yes';
+    }
   }
-}
 
 calculateWinner(){
   const lines = [
