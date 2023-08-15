@@ -1,3 +1,3 @@
-<button *ngIf="value === undefined" (click)="makeMove(1, 1)">Empty Cell</button>
-<button *ngIf="value === 'X'">X</button>
-<button *ngIf="value === 'O'">O</button>
+<button *ngIf="!value">{{value}}</button>
+<button *ngIf="value == 'X'">{{value}}</button>
+<button *ngIf="value == 'O'">{{value}}</button>

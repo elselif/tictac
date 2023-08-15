@@ -16,24 +16,13 @@ export class GameComponent implements OnInit {
   constructor(private socketService : SocketServiceService) { }
 
   ngOnInit(): void {
-    const socket = this.socketService.getSocket();
 
-    socket.on('playerMove', (data: { value: 'X' | 'O', index: number }) => {
-      // Gelen hamleyi yerel olarak güncelleme
-      if (!this.squares[data.index]) {
-        this.squares.splice(data.index, 1, data.value);
-        this.xIsNext = !this.xIsNext;
-        this.counter++;
+    this.socketService.getPosition().subscribe((res)=>{
+      console.log(res);
+      this.makeMove(res)
+    })
 
-        // Kazananı kontrol ediyoruz
-        this.winner = this.calculateWinner();
 
-        // Berabere durumunu kontrol ediyoruz
-        if (!this.winner && this.counter === 9) {
-          this.isdraw = 'yes';
-        }
-      }
-    });
   }
 
   newGame(){
@@ -50,10 +39,11 @@ export class GameComponent implements OnInit {
 
   makeMove(index: number) {
     if (!this.squares[index]) {
-      const socket = this.socketService.getSocket();
+
 
       // Oyuncunun hamlesini sunucuya gönderiyoruz
-      socket.emit('playerMove', { value: this.player, index: index });
+
+      this.socketService.sendPosition(index);
 
       // Oyuncunun hamlesini yerel olarak güncelliyoruz
       this.squares.splice(index, 1, this.player);

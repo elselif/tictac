@@ -1,16 +1,15 @@
 const server = require('http').createServer()
 const io = require('socket.io')(server, {
     cors: {
-        origin: "http://localhost:4200",
+        origin: "*",
         methods: ["GET", "POST"]
     }
 });
 io.on('connection', (socket)=> {
-    socket.emit("hello", "youtube tutorial");
-    // receive the event and broadcast to other clients
-    socket.on("play", index => {
+    console.log("deneme");
+    socket.on("position", index => {
         console.log("server received", index)
-        socket.broadcast.emit("play", index)
+        socket.emit("positonResponse", index)
     })
 })
 
