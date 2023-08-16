@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketServiceService } from '../service/socket-service.service';
+import { Socket } from 'dgram';
 
 @Component({
   selector: 'app-game',
@@ -13,6 +14,7 @@ export class GameComponent implements OnInit {
   counter = 0;
   isdraw = '';
   freshpage = true;
+  playerType: string='';
   constructor(private socketService : SocketServiceService) { }
 
   ngOnInit(): void {
@@ -24,6 +26,8 @@ export class GameComponent implements OnInit {
 
 
   }
+
+  
 
   newGame(){
     this.squares = Array(9).fill(null);

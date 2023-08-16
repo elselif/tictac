@@ -10,7 +10,7 @@ import { BoardComponent } from './board/board.component';
   declarations: [
     AppComponent,
     GameComponent,
-    BoardComponent
+    BoardComponent,
   ],
   imports: [
     BrowserModule,

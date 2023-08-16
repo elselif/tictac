@@ -16,7 +16,7 @@ export class SocketServiceService {
 
    getPosition(): Observable<number> {
     let index : BehaviorSubject <number> = new BehaviorSubject<number>(0)
-    this.socket.on('positonResponse',(data:number )=> {
+    this.socket.on('positionResponse',(data:number )=> {
 
       index.next(data)
       return index.asObservable()
@@ -25,8 +25,8 @@ export class SocketServiceService {
     return index.asObservable();
    }
 
-   sendPosition(index:number) {
-    console.log("send")
-    this.socket.emit('position',index);
-   }
+   
+
+
+
 }
