@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketServiceService } from '../service/socket-service.service';
-import { Socket } from 'dgram';
 
 @Component({
   selector: 'app-game',
@@ -24,10 +23,17 @@ export class GameComponent implements OnInit {
       this.makeMove(res)
     })
 
+    this.socketService.getPlayerSelection().subscribe((player: string) => {
+      this.playerType = player;
+      console.log(player)
+    });
+
 
   }
+  selectPlayer(player: string) {
+    this.socketService.sendPlayerSelection(player);
+  }
 
-  
 
   newGame(){
     this.squares = Array(9).fill(null);
@@ -49,9 +55,10 @@ export class GameComponent implements OnInit {
 
       this.socketService.sendPosition(index);
 
+      
       // Oyuncunun hamlesini yerel olarak güncelliyoruz
       this.squares.splice(index, 1, this.player);
-      this.xIsNext = !this.xIsNext;
+      // this.xIsNext = !this.xIsNext;
       this.counter++;
     }
 

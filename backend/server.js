@@ -20,7 +20,6 @@ io.on('connection', (socket) => {
         playerO = socket.id;
         socket.emit('playerType', 'O');
       } else {
-        socket.emit('roomFull');
         socket.disconnect(true);
       }
     socket.on("position", (index) => {

@@ -14,6 +14,20 @@ export class SocketServiceService {
     this.socket = io('http://localhost:3000')
    }
 
+   sendPlayerSelection(player: string) {
+    this.socket.emit('playerSelection', player);
+  }
+
+  getPlayerSelection(): Observable<string> {
+    let playerSelectionSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+    this.socket.on('playerSelectionResponse', (data: string) => {
+      playerSelectionSubject.next(data);
+    });
+
+    return playerSelectionSubject.asObservable();
+  }
+
    getPosition(): Observable<number> {
     let index : BehaviorSubject <number> = new BehaviorSubject<number>(0)
     this.socket.on('positionResponse',(data:number )=> {
@@ -25,7 +39,10 @@ export class SocketServiceService {
     return index.asObservable();
    }
 
-   
+   sendPosition(index:number) {
+    console.log("send")
+    this.socket.emit('position',index);
+   }
 
 
 
