@@ -15,10 +15,10 @@ io.on('connection', (socket) => {
     console.log('Bir oyuncu bağlandı:', socket.id);
     if (playerX === null) {
         playerX = socket.id;
-        socket.emit('playerType', 'X');
+        io.emit('playerType', 'X');
       } else if (playerO === null) {
         playerO = socket.id;
-        socket.emit('playerType', 'O');
+        io.emit('playerType', 'O');
       } else {
         socket.disconnect(true);
       }

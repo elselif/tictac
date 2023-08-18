@@ -21,8 +21,9 @@ export class SocketServiceService {
   getPlayerSelection(): Observable<string> {
     let playerSelectionSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-    this.socket.on('playerSelectionResponse', (data: string) => {
+    this.socket.on('playerType', (data: string) => {
       playerSelectionSubject.next(data);
+      
     });
 
     return playerSelectionSubject.asObservable();

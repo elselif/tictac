@@ -31,7 +31,8 @@ export class GameComponent implements OnInit {
 
   }
   selectPlayer(player: string) {
-    this.socketService.sendPlayerSelection(player);
+    // this.socketService.sendPlayerSelection(player);
+    this.newGame();
   }
 
 
@@ -43,9 +44,6 @@ export class GameComponent implements OnInit {
     this.freshpage = false;
   }
 
-  get player(){
-    return this.xIsNext?'X':'O'
-  }
 
   makeMove(index: number) {
     if (!this.squares[index]) {
@@ -55,9 +53,9 @@ export class GameComponent implements OnInit {
 
       this.socketService.sendPosition(index);
 
-      
+
       // Oyuncunun hamlesini yerel olarak güncelliyoruz
-      this.squares.splice(index, 1, this.player);
+      this.squares.splice(index, 1, this.playerType);
       // this.xIsNext = !this.xIsNext;
       this.counter++;
     }
