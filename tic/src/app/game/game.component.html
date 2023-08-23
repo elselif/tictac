@@ -9,10 +9,10 @@
   <h2 *ngIf="isdraw">Draw!!!</h2>
   <!-- <button *ngIf="winner || isdraw || freshpage" outline (click)="newGame()">Start New Game</button> -->
 
-  <button *ngIf="winner || isdraw || freshpage" (click)="selectPlayer('X')">
+  <button *ngIf="winner || isdraw || freshpage" [ngClass]="{ 'disabled': currentPlayer.selection !== '' && currentPlayer.selection !== 'X' }" (click)="selectPlayer('X')">
     X
   </button>
-  <button *ngIf="winner || isdraw || freshpage" (click)="selectPlayer('O')">
+  <button *ngIf="winner || isdraw || freshpage" [ngClass]="{ 'disabled': currentPlayer.selection !== '' && currentPlayer.selection !== 'O' }" (click)="selectPlayer('O')">
     O
   </button>
 

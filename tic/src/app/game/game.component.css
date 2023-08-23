@@ -55,3 +55,10 @@ h2{
   font-size: 100px;
   color: white;
 }
+
+
+.disabled {
+  pointer-events: none; /* Butonun tıklanabilirliğini kapatır */
+  opacity: 0.6; /* Butonun saydamlığını azaltır (kapalı gibi görünmesini sağlar) */
+  cursor: not-allowed; /* Farenin işaretçisini "not-allowed" (yapılamaz) yapar */
+}
