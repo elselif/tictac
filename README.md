@@ -1,6 +1,7 @@
 # X O X Game
 
 This project includes an XOX (Tic-Tac-Toe) game developed using Angular and Socket.IO. This README file explains how to set up, run and customize the project.
+![screenshot-1.png]
 ## Requirements
 
 
